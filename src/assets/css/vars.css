@@ -1,0 +1,19 @@
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+html,
+body {
+	scroll-behavior: smooth;
+}
+
+:root {
+	--main-text: #000000;
+	--accent-color: #0077ff;
+	--bg-color: #ffffff;
+	--blocks-bg: #f2f4f3;
+
+	--outline: 0 0 0 4px rgba(0, 96, 223, 0.3);
+}

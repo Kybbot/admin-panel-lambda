@@ -1,0 +1,26 @@
+.article {
+	padding: 25px;
+	border-radius: 10px;
+	background-color: var(--blocks-bg);
+	margin-bottom: 30px;
+	transition: all 0.3s ease;
+}
+
+.article:hover {
+	color: #f9fdff;
+	background-color: #171c26;
+}
+
+.article:last-child {
+	margin-bottom: 0;
+}
+
+.article__title {
+	max-width: 470px;
+	margin-bottom: 20px;
+}
+
+.article__text {
+	max-width: 500px;
+	margin-bottom: 40px;
+}

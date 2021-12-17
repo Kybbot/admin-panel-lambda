@@ -1,0 +1,29 @@
+@media screen and (max-width: 500px) {
+	body {
+		padding: 20px 0;
+	}
+
+	h1 {
+		font-size: 24px;
+	}
+
+	h2 {
+		font-size: 18px;
+	}
+
+	p {
+		font-size: 14px;
+	}
+
+	.header {
+		margin-bottom: 30px;
+	}
+
+	.btn {
+		font-size: 14px;
+	}
+
+	.article__title {
+		margin-bottom: 15px;
+	}
+}

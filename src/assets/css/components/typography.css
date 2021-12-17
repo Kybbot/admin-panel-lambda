@@ -1,0 +1,21 @@
+h1,
+h2 {
+	font-weight: 600;
+	color: var(--mian-text);
+	margin: 0;
+}
+
+h1 {
+	font-size: 30px;
+}
+
+h2 {
+	font-size: 22px;
+}
+
+p {
+	font-size: 18px;
+	font-weight: 400;
+	color: var(--mian-text);
+	margin: 0;
+}

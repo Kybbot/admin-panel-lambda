@@ -1,11 +1,12 @@
 import React from "react";
 
+import { Header, Articles } from "./components";
+
 const App = () => {
 	return (
 		<>
-			<header>Header</header>
-			<main>Main</main>
-			<footer>Footer</footer>
+			<Header />
+			<Articles />
 		</>
 	);
 };
