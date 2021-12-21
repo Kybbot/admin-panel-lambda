@@ -1,0 +1,12 @@
+.edit__info {
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 40px;
+	margin: 40px 0;
+}
+
+.edit__time {
+	font-weight: 300;
+	font-size: 24px;
+}
