@@ -1,0 +1,19 @@
+.info-message {
+	display: inline-block;
+	line-height: 40px;
+	text-decoration: underline;
+	text-decoration-thickness: 5px;
+	text-underline-position: under;
+}
+
+.info-message__loading {
+	text-decoration-color: hsl(200, 100%, 80%);
+}
+
+.info-message__success {
+	text-decoration-color: hsl(90, 100%, 80%);
+}
+
+.info-message__error {
+	text-decoration-color: hsl(0, 100%, 80%);
+}
