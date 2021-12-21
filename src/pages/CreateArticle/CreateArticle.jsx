@@ -2,11 +2,11 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import MDEditor from "@uiw/react-md-editor";
 
-import { useArticlesContext } from "../../context/ArticlesContext";
+import useFetch from "../../hooks/useFetch";
 
 const CreateArticle = () => {
 	const navigate = useNavigate();
-	const { createArtilce, loading } = useArticlesContext();
+	const { loading, request } = useFetch();
 
 	const [state, setState] = React.useState({
 		title: "",
@@ -25,7 +25,7 @@ const CreateArticle = () => {
 		}));
 	};
 
-	const formSubmitHandler = (event) => {
+	const formSubmitHandler = async (event) => {
 		event.preventDefault();
 
 		const data = {
@@ -33,7 +33,9 @@ const CreateArticle = () => {
 			content: mdValue,
 		};
 
-		createArtilce(data);
+		const result = await request("/articles/create", "POST", data);
+
+		console.log(result);
 	};
 
 	const goBackButtonHandler = () => {

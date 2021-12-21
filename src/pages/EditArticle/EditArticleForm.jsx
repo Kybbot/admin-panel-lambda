@@ -1,12 +1,12 @@
 import React from "react";
 import MDEditor from "@uiw/react-md-editor";
 
-import { useArticlesContext } from "../../context/ArticlesContext";
+import useFetch from "../../hooks/useFetch";
 
 const EditArticleForm = ({ article }) => {
 	const { id, title, meta_title, meta_description, content } = article;
 
-	const { updateArticleById, loading } = useArticlesContext();
+	const { loading, request } = useFetch();
 
 	const [state, setState] = React.useState({
 		title: title,
@@ -25,7 +25,7 @@ const EditArticleForm = ({ article }) => {
 		}));
 	};
 
-	const formSubmitHandler = (event) => {
+	const formSubmitHandler = async (event) => {
 		event.preventDefault();
 
 		const data = {
@@ -33,7 +33,9 @@ const EditArticleForm = ({ article }) => {
 			content: mdValue,
 		};
 
-		updateArticleById(id, data);
+		const result = await request(`/articles/${id}`, "PUT", data);
+
+		console.log(result);
 	};
 
 	return (
