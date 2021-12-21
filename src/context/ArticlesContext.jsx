@@ -1,11 +1,6 @@
 import React from "react";
 
-import {
-	getAllArticles,
-	getArticle,
-	updateArticle,
-	addArticle,
-} from "../api/articles";
+import { getAllArticles, getArticle } from "../api/articles";
 
 const ArticlesContext = React.createContext({
 	articles: [],
@@ -14,8 +9,6 @@ const ArticlesContext = React.createContext({
 	error: null,
 	getArticles: () => {},
 	getArticleById: (id = "") => {},
-	updateArticleById: (id = "", body = {}) => {},
-	createArtilce: (body = {}) => {},
 });
 
 export const useArticlesContext = () => {
@@ -66,46 +59,6 @@ export const ArticlesProvider = ({ children }) => {
 		}
 	};
 
-	const updateArticleByIdHandler = async (id, body) => {
-		setLoading(true);
-
-		try {
-			const response = await updateArticle(id, body);
-			const data = await response.json();
-
-			console.log(data);
-
-			if (!response.ok) {
-				throw new Error(data.message || "Что-то пошло не так");
-			}
-
-			setLoading(false);
-		} catch (err) {
-			setLoading(false);
-			setError(err);
-		}
-	};
-
-	const createArtilceHandler = async (body) => {
-		setLoading(true);
-
-		try {
-			const response = await addArticle(body);
-			const data = await response.json();
-
-			console.log(data);
-
-			if (!response.ok) {
-				throw new Error(data.message || "Что-то пошло не так");
-			}
-
-			setLoading(false);
-		} catch (err) {
-			setLoading(false);
-			setError(err);
-		}
-	};
-
 	React.useEffect(() => {
 		getArticlesHandler();
 	}, []);
@@ -117,8 +70,6 @@ export const ArticlesProvider = ({ children }) => {
 		error,
 		getArticles: getArticlesHandler,
 		getArticleById: getArticleByIdHandler,
-		updateArticleById: updateArticleByIdHandler,
-		createArtilce: createArtilceHandler,
 	};
 
 	return (
