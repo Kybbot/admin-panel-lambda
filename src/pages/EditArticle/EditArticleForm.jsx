@@ -2,11 +2,13 @@ import React from "react";
 import MDEditor from "@uiw/react-md-editor";
 
 import useFetch from "../../hooks/useFetch";
+import { InfoMessage } from "../../components";
+import { infoMessageTypes } from "../../constants";
 
 const EditArticleForm = ({ article }) => {
 	const { id, title, meta_title, meta_description, content } = article;
 
-	const { loading, request } = useFetch();
+	const { loading, error, request } = useFetch();
 
 	const [state, setState] = React.useState({
 		title: title,
@@ -15,6 +17,7 @@ const EditArticleForm = ({ article }) => {
 	});
 
 	const [mdValue, setMdValue] = React.useState(content);
+	const [success, setSuccess] = React.useState(false);
 
 	const handleInputChange = (event) => {
 		const { name, value } = event.target;
@@ -35,7 +38,12 @@ const EditArticleForm = ({ article }) => {
 
 		const result = await request(`/articles/${id}`, "PUT", data);
 
-		console.log(result);
+		if (!loading && !error && typeof result !== "undefined") {
+			setSuccess(true);
+			setTimeout(() => {
+				setSuccess(false);
+			}, 4000);
+		}
 	};
 
 	return (
@@ -82,7 +90,16 @@ const EditArticleForm = ({ article }) => {
 			<button className="btn" type="submit">
 				Обновить статью
 			</button>
-			<span>{loading && "Loading"}</span>
+			{loading && (
+				<InfoMessage type={infoMessageTypes.loading} message={"Загрузка"} />
+			)}
+			{success && (
+				<InfoMessage
+					type={infoMessageTypes.success}
+					message={"Статья обновлена"}
+				/>
+			)}
+			{error && <InfoMessage type={infoMessageTypes.error} message={error} />}
 		</form>
 	);
 };

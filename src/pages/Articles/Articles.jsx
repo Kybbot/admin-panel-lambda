@@ -2,14 +2,22 @@ import React from "react";
 
 import { useArticlesContext } from "../../context/ArticlesContext";
 import ArticlesList from "./ArticlesList";
+import { InfoMessage } from "../../components";
+import { infoMessageTypes } from "../../constants";
 
 const Articles = () => {
-	const { articles, loading } = useArticlesContext();
+	const { articles, error, loading } = useArticlesContext();
 
 	return (
 		<main className="articles">
 			<div className="container">
-				{loading ? <h3>Loading</h3> : <ArticlesList articles={articles} />}
+				{loading ? (
+					<InfoMessage type={infoMessageTypes.loading} message={"Загрузка"} />
+				) : error ? (
+					<InfoMessage type={infoMessageTypes.error} message={error} />
+				) : (
+					<ArticlesList articles={articles} />
+				)}
 			</div>
 		</main>
 	);

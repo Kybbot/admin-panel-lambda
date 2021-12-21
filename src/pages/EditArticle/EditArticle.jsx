@@ -4,10 +4,12 @@ import { useNavigate } from "react-router-dom";
 import { useArticlesContext } from "../../context/ArticlesContext";
 import transformToDateFromTime from "../../utils/transformToDateFromTime";
 import EditArticleForm from "./EditArticleForm";
+import { InfoMessage } from "../../components";
+import { infoMessageTypes } from "../../constants";
 
 const EditArticle = () => {
 	const navigate = useNavigate();
-	const { article, loading } = useArticlesContext();
+	const { article, loading, error } = useArticlesContext();
 
 	const { created_at, updated_at } = article;
 
@@ -19,7 +21,9 @@ const EditArticle = () => {
 		<main className="edit">
 			<div className="container">
 				{loading ? (
-					<h3>Loading</h3>
+					<InfoMessage type={infoMessageTypes.loading} message={"Загрузка"} />
+				) : error ? (
+					<InfoMessage type={infoMessageTypes.error} message={error} />
 				) : (
 					<>
 						<button className="btn" type="button" onClick={goBackButtonHandler}>

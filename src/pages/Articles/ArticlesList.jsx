@@ -31,25 +31,23 @@ const ArticlesList = ({ articles }) => {
 
 	return (
 		<>
-			<div className="articles__container">
-				{currentArticles.length ? (
-					currentArticles.map((article) => (
-						<Article key={article.id} data={article} />
-					))
-				) : (
-					<p>Empty</p>
-				)}
-			</div>
 			{currentArticles.length ? (
-				<Pagination
-					pages={totalPages}
-					currentPage={currentPage}
-					changePage={changePage}
-					prevPageHandler={prevPageHandler}
-					nextPageHandler={nextPageHandler}
-				/>
+				<>
+					<div className="articles__container">
+						{currentArticles.map((article) => (
+							<Article key={article.id} data={article} />
+						))}
+					</div>
+					<Pagination
+						pages={totalPages}
+						currentPage={currentPage}
+						changePage={changePage}
+						prevPageHandler={prevPageHandler}
+						nextPageHandler={nextPageHandler}
+					/>
+				</>
 			) : (
-				""
+				<p>Empty</p>
 			)}
 		</>
 	);

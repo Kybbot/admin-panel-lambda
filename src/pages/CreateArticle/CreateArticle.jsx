@@ -3,18 +3,22 @@ import { useNavigate } from "react-router-dom";
 import MDEditor from "@uiw/react-md-editor";
 
 import useFetch from "../../hooks/useFetch";
+import { InfoMessage } from "../../components";
+import { infoMessageTypes } from "../../constants";
 
 const CreateArticle = () => {
 	const navigate = useNavigate();
-	const { loading, request } = useFetch();
+	const { loading, error, request } = useFetch();
 
-	const [state, setState] = React.useState({
+	const initialState = {
 		title: "",
 		meta_title: "",
 		meta_description: "",
-	});
+	};
 
+	const [state, setState] = React.useState(initialState);
 	const [mdValue, setMdValue] = React.useState("");
+	const [success, setSuccess] = React.useState(false);
 
 	const handleInputChange = (event) => {
 		const { name, value } = event.target;
@@ -35,7 +39,15 @@ const CreateArticle = () => {
 
 		const result = await request("/articles/create", "POST", data);
 
-		console.log(result);
+		if (!loading && !error && typeof result !== "undefined") {
+			setSuccess(true);
+			setState(initialState);
+			setMdValue("");
+
+			setTimeout(() => {
+				setSuccess(false);
+			}, 4000);
+		}
 	};
 
 	const goBackButtonHandler = () => {
@@ -98,7 +110,18 @@ const CreateArticle = () => {
 					<button className="btn" type="submit">
 						Создать статью
 					</button>
-					<span>{loading && "Loading"}</span>
+					{loading && (
+						<InfoMessage type={infoMessageTypes.loading} message={"Загрузка"} />
+					)}
+					{success && (
+						<InfoMessage
+							type={infoMessageTypes.success}
+							message={"Статья создана"}
+						/>
+					)}
+					{error && (
+						<InfoMessage type={infoMessageTypes.error} message={error} />
+					)}
 				</form>
 			</div>
 		</main>
