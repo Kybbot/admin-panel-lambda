@@ -36,7 +36,7 @@ export const ArticlesProvider = ({ children }) => {
 			setLoading(false);
 		} catch (err) {
 			setLoading(false);
-			setError(err);
+			setError(err.message);
 		}
 	};
 
@@ -48,14 +48,14 @@ export const ArticlesProvider = ({ children }) => {
 			const data = await response.json();
 
 			if (!response.ok) {
-				throw new Error(data.message || "Что-то пошло не так");
+				throw new Error(data.error.message || "Что-то пошло не так");
 			}
 
 			setArticle(data);
 			setLoading(false);
 		} catch (err) {
 			setLoading(false);
-			setError(err);
+			setError(err.message);
 		}
 	};
 
