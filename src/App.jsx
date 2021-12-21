@@ -1,13 +1,17 @@
 import React from "react";
+import { BrowserRouter } from "react-router-dom";
 
-import { Header, Articles } from "./components";
+import { ArticlesProvider } from "./context/ArticlesContext";
+import { Header, Routers } from "./components";
 
 const App = () => {
 	return (
-		<>
+		<BrowserRouter>
 			<Header />
-			<Articles />
-		</>
+			<ArticlesProvider>
+				<Routers />
+			</ArticlesProvider>
+		</BrowserRouter>
 	);
 };
 
