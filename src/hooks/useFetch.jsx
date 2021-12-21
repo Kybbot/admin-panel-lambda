@@ -1,6 +1,6 @@
 import React from "react";
 
-const API_URL = "https://x03xdh6x33.execute-api.us-east-1.amazonaws.com/dev";
+import api from "../constants/api";
 
 const useFetch = () => {
 	const [loading, setLoading] = React.useState(false);
@@ -14,9 +14,10 @@ const useFetch = () => {
 				if (body) {
 					body = JSON.stringify(body);
 					headers["Content-Type"] = "application/json";
+					headers["Authorization"] = `Basic ${btoa("admin:qwerty123")}`;
 				}
 
-				const response = await fetch(`${API_URL}${url}`, {
+				const response = await fetch(`${api.url}${url}`, {
 					method,
 					body,
 					headers,
@@ -33,7 +34,6 @@ const useFetch = () => {
 			} catch (err) {
 				setLoading(false);
 				setError(err.message);
-				console.log(err);
 			}
 		},
 		[]
