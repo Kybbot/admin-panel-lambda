@@ -1,6 +1,6 @@
 const transformToDateFromTime = (time) => {
 	const date = new Date(time);
-	const day = date.getDay();
+	const day = date.getDate();
 	const month = date.getMonth() + 1;
 	const year = date.getFullYear();
 
