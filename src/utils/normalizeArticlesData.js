@@ -1,12 +1,15 @@
 const normalizeArticlesData = (articles) => {
-	const normilezedArticles = articles.reduce((obj, currItem) => {
-		obj[currItem.id] = {
-			title: currItem.title,
-		};
+	const normilezedArticlesById = articles.reduce((obj, currItem) => {
+		obj[currItem.id] = currItem;
 		return obj;
 	}, {});
 
-	return normilezedArticles;
+	const allIds = articles.map((article) => article.id);
+
+	return {
+		byId: normilezedArticlesById,
+		allIds,
+	};
 };
 
 export default normalizeArticlesData;
