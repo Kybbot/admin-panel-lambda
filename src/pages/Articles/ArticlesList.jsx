@@ -1,9 +1,14 @@
 import React from "react";
+import { useLocation } from "react-router-dom";
 import Article from "./Article";
 import Pagination from "./Pagination";
 
 const ArticlesList = ({ articles }) => {
-	const [currentPage, setCurrentPage] = React.useState(1);
+	const location = useLocation();
+
+	const [currentPage, setCurrentPage] = React.useState(
+		parseInt(location.search?.split("=")[1] || 1)
+	);
 
 	const articlesPerPage = 5;
 	const lastArticleInex = currentPage * articlesPerPage;

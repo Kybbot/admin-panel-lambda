@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Pagination = ({
 	pages,
@@ -15,18 +16,23 @@ const Pagination = ({
 
 	return (
 		<div className="pagination">
-			<button
-				type="button"
-				className="pagination__left"
+			<Link
+				to={`${
+					currentPage === 1 || currentPage - 1 === 1
+						? "/"
+						: `?page=${currentPage - 1}`
+				}`}
+				className={`pagination__left ${
+					currentPage === 1 ? "pagination__disable" : ""
+				}`}
 				onClick={prevPageHandler}
-				disabled={currentPage === 1}
 			>
 				&#60;
-			</button>
+			</Link>
 			<div className="pagination__numbers">
 				{pagesCount.map((page) => (
-					<button
-						type="button"
+					<Link
+						to={`${page === 1 ? "/" : `?page=${page}`}`}
 						key={page}
 						className={`${
 							currentPage === page
@@ -36,17 +42,21 @@ const Pagination = ({
 						onClick={() => changePage(page)}
 					>
 						{page}
-					</button>
+					</Link>
 				))}
 			</div>
-			<button
-				type="button"
-				className="pagination__right"
+			<Link
+				to={`${
+					currentPage === pages ? `?page=${pages}` : `?page=${currentPage + 1}`
+				}`}
+				className={`pagination__right ${
+					currentPage === pages ? "pagination__disable" : ""
+				}`}
 				onClick={nextPageHandler}
 				disabled={currentPage === pages}
 			>
 				&#62;
-			</button>
+			</Link>
 		</div>
 	);
 };
