@@ -2,6 +2,11 @@
 	margin-bottom: 40px;
 }
 
+.header__link {
+	color: var(--main-text);
+	text-decoration: none;
+}
+
 .header__container {
 	display: flex;
 	justify-content: space-between;
