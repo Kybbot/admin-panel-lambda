@@ -1,9 +1,11 @@
 import React from "react";
 
 import { getAllArticles, getArticle } from "../api/articles";
+import normalizeArticlesData from "../utils/normalizeArticlesData";
 
 const ArticlesContext = React.createContext({
 	articles: [],
+	normalizedArticles: {},
 	article: {},
 	loading: true,
 	error: null,
@@ -17,6 +19,7 @@ export const useArticlesContext = () => {
 
 export const ArticlesProvider = ({ children }) => {
 	const [articles, setArticles] = React.useState([]);
+	const [normalizedArticles, setNormalizedArticles] = React.useState({});
 	const [article, setArticle] = React.useState({});
 	const [loading, setLoading] = React.useState(false);
 	const [error, setError] = React.useState(null);
@@ -34,6 +37,7 @@ export const ArticlesProvider = ({ children }) => {
 
 			setArticles(data.items);
 			setLoading(false);
+			setNormalizedArticles(normalizeArticlesData(data.items));
 		} catch (err) {
 			setLoading(false);
 			setError(err.message);
@@ -65,6 +69,7 @@ export const ArticlesProvider = ({ children }) => {
 
 	const contextValue = {
 		articles,
+		normalizedArticles,
 		article,
 		loading,
 		error,
