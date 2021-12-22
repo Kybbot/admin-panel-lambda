@@ -4,13 +4,15 @@ import { getAllArticles, getArticle } from "../api/articles";
 import normalizeArticlesData from "../utils/normalizeArticlesData";
 
 const ArticlesContext = React.createContext({
-	articles: [],
+	normalizedArticlesIds: [],
 	normalizedArticles: {},
 	article: {},
 	loading: true,
 	error: null,
 	getArticles: () => {},
 	getArticleById: (id = "") => {},
+	updateNormalizedArticles: (articleId = "", articleData = {}) => {},
+	addToNormalizedArticles: () => {},
 });
 
 export const useArticlesContext = () => {
@@ -18,13 +20,13 @@ export const useArticlesContext = () => {
 };
 
 export const ArticlesProvider = ({ children }) => {
-	const [articles, setArticles] = React.useState([]);
+	const [normalizedArticlesIds, setNormalizedArticlesIds] = React.useState([]);
 	const [normalizedArticles, setNormalizedArticles] = React.useState({});
 	const [article, setArticle] = React.useState({});
 	const [loading, setLoading] = React.useState(false);
 	const [error, setError] = React.useState(null);
 
-	const getArticlesHandler = async () => {
+	const getArticles = async () => {
 		setLoading(true);
 
 		try {
@@ -35,16 +37,18 @@ export const ArticlesProvider = ({ children }) => {
 				throw new Error(data.message || "Что-то пошло не так");
 			}
 
-			setArticles(data.items);
+			const normilizedData = normalizeArticlesData(data.items);
+			setNormalizedArticlesIds(normilizedData.allIds);
+			setNormalizedArticles(normilizedData.byId);
+
 			setLoading(false);
-			setNormalizedArticles(normalizeArticlesData(data.items));
 		} catch (err) {
-			setLoading(false);
 			setError(err.message);
+			setLoading(false);
 		}
 	};
 
-	const getArticleByIdHandler = async (id) => {
+	const getArticleById = async (id) => {
 		setLoading(true);
 
 		try {
@@ -58,23 +62,40 @@ export const ArticlesProvider = ({ children }) => {
 			setArticle(data);
 			setLoading(false);
 		} catch (err) {
-			setLoading(false);
 			setError(err.message);
+			setLoading(false);
 		}
 	};
 
+	const updateNormalizedArticles = (articleId, articleData) => {
+		setNormalizedArticles((prevState) => ({
+			...prevState,
+			[articleId]: articleData,
+		}));
+	};
+
+	const addToNormalizedArticles = (articleId, articleData) => {
+		setNormalizedArticlesIds((prevState) => [...prevState, articleId]);
+		setNormalizedArticles((prevState) => ({
+			...prevState,
+			[articleId]: articleData,
+		}));
+	};
+
 	React.useEffect(() => {
-		getArticlesHandler();
+		getArticles();
 	}, []);
 
 	const contextValue = {
-		articles,
+		normalizedArticlesIds,
 		normalizedArticles,
 		article,
 		loading,
 		error,
-		getArticles: getArticlesHandler,
-		getArticleById: getArticleByIdHandler,
+		getArticles,
+		getArticleById,
+		updateNormalizedArticles,
+		addToNormalizedArticles,
 	};
 
 	return (
