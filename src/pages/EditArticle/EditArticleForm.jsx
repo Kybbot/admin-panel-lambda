@@ -5,8 +5,8 @@ import useFetch from "../../hooks/useFetch";
 import { InfoMessage } from "../../components";
 import { infoMessageTypes } from "../../constants";
 
-const EditArticleForm = ({ article }) => {
-	const { id, title, meta_title, meta_description, content } = article;
+const EditArticleForm = ({ article, updateArticle }) => {
+	const { id, title, slug, meta_title, meta_description, content } = article;
 
 	const { loading, error, request } = useFetch();
 
@@ -37,6 +37,8 @@ const EditArticleForm = ({ article }) => {
 		};
 
 		const result = await request(`/articles/${id}`, "PUT", data);
+
+		updateArticle(id, { id, title: state.title, slug });
 
 		if (!loading && !error && typeof result !== "undefined") {
 			setSuccess(true);

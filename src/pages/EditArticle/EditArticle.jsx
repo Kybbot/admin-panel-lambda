@@ -9,7 +9,8 @@ import { infoMessageTypes } from "../../constants";
 
 const EditArticle = () => {
 	const navigate = useNavigate();
-	const { article, loading, error } = useArticlesContext();
+	const { article, loading, error, updateNormalizedArticles } =
+		useArticlesContext();
 
 	const { created_at, updated_at } = article;
 
@@ -39,7 +40,10 @@ const EditArticle = () => {
 								<time>{transformToDateFromTime(updated_at)}</time>
 							</p>
 						</div>
-						<EditArticleForm article={article} />
+						<EditArticleForm
+							article={article}
+							updateArticle={updateNormalizedArticles}
+						/>
 					</>
 				)}
 			</div>

@@ -6,7 +6,8 @@ import { InfoMessage } from "../../components";
 import { infoMessageTypes } from "../../constants";
 
 const Articles = () => {
-	const { articles, error, loading } = useArticlesContext();
+	const { normalizedArticlesIds, normalizedArticles, error, loading } =
+		useArticlesContext();
 
 	return (
 		<main className="articles">
@@ -16,7 +17,10 @@ const Articles = () => {
 				) : error ? (
 					<InfoMessage type={infoMessageTypes.error} message={error} />
 				) : (
-					<ArticlesList articles={articles} />
+					<ArticlesList
+						articlesIds={normalizedArticlesIds}
+						articles={normalizedArticles}
+					/>
 				)}
 			</div>
 		</main>

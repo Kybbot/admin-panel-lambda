@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom";
 import Article from "./Article";
 import Pagination from "./Pagination";
 
-const ArticlesList = ({ articles }) => {
+const ArticlesList = ({ articlesIds, articles }) => {
 	const location = useLocation();
 
 	const [currentPage, setCurrentPage] = React.useState(
@@ -13,9 +13,12 @@ const ArticlesList = ({ articles }) => {
 	const articlesPerPage = 5;
 	const lastArticleInex = currentPage * articlesPerPage;
 	const firstArticleIndex = lastArticleInex - articlesPerPage;
-	const currentArticles = articles.slice(firstArticleIndex, lastArticleInex);
+	const currentArticlesIds = articlesIds.slice(
+		firstArticleIndex,
+		lastArticleInex
+	);
 
-	const totalPages = Math.ceil(articles.length / articlesPerPage);
+	const totalPages = Math.ceil(articlesIds.length / articlesPerPage);
 
 	const changePage = (page) => {
 		setCurrentPage(page);
@@ -36,11 +39,11 @@ const ArticlesList = ({ articles }) => {
 
 	return (
 		<>
-			{currentArticles.length ? (
+			{currentArticlesIds.length ? (
 				<>
 					<div className="articles__container">
-						{currentArticles.map((article) => (
-							<Article key={article.id} data={article} />
+						{currentArticlesIds.map((id) => (
+							<Article key={id} data={articles[id]} />
 						))}
 					</div>
 					<Pagination

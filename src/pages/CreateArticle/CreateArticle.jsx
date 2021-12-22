@@ -3,11 +3,13 @@ import { useNavigate } from "react-router-dom";
 import MDEditor from "@uiw/react-md-editor";
 
 import useFetch from "../../hooks/useFetch";
+import { useArticlesContext } from "../../context/ArticlesContext";
 import { InfoMessage } from "../../components";
 import { infoMessageTypes } from "../../constants";
 
 const CreateArticle = () => {
 	const navigate = useNavigate();
+	const { addToNormalizedArticles } = useArticlesContext();
 	const { loading, error, request } = useFetch();
 
 	const initialState = {
@@ -39,20 +41,30 @@ const CreateArticle = () => {
 
 		const result = await request("/articles/create", "POST", data);
 
+		addToNormalizedArticles(result.id, {
+			id: result.id,
+			title: result.title,
+			slug: result.slug,
+		});
+
 		if (!loading && !error && typeof result !== "undefined") {
 			setSuccess(true);
 			setState(initialState);
 			setMdValue("");
-
-			setTimeout(() => {
-				setSuccess(false);
-			}, 4000);
 		}
 	};
 
 	const goBackButtonHandler = () => {
 		navigate(-1);
 	};
+
+	React.useEffect(() => {
+		const timer = setTimeout(() => {
+			setSuccess(false);
+		}, 3000);
+
+		return () => clearTimeout(timer);
+	}, [success]);
 
 	return (
 		<main className="create">
