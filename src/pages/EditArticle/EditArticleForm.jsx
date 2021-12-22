@@ -81,12 +81,17 @@ const EditArticleForm = ({ article }) => {
 					onChange={handleInputChange}
 				/>
 			</label>
-			<MDEditor
-				value={mdValue}
-				onChange={setMdValue}
-				enableScroll={false}
-				height={450}
-			/>
+			<label htmlFor="content" className="form__label">
+				Контент
+				<MDEditor
+					value={mdValue}
+					onChange={setMdValue}
+					enableScroll={false}
+					height={450}
+					textareaProps={{ id: "content" }}
+				/>
+			</label>
+
 			<button className="btn" type="submit">
 				Обновить статью
 			</button>
