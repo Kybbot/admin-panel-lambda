@@ -1,0 +1,34 @@
+.search {
+	flex-direction: column;
+	gap: 20px;
+	margin-bottom: 40px;
+}
+
+.search__output {
+	border-radius: 10px;
+	border: 1px solid var(--blocks-bg);
+	background-color: #f9fafa;
+	font-family: inherit;
+}
+
+.search__list {
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+}
+
+.search__item {
+	border-radius: 10px;
+	transition: background-color 0.3s ease;
+}
+
+.search__item:hover {
+	background-color: #ecf0f1;
+}
+
+.search__link {
+	display: block;
+	padding: 10px;
+	color: var(--main-text);
+	text-decoration: none;
+}

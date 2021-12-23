@@ -8,6 +8,7 @@
 .form__label {
 	display: flex;
 	flex-direction: column;
+	gap: 10px;
 	width: 100%;
 	font-size: 20px;
 	font-weight: 600;
@@ -18,7 +19,6 @@
 	border: 1px solid var(--blocks-bg);
 	background-color: var(--blocks-bg);
 	padding: 10px;
-	margin-top: 10px;
 	font-family: inherit;
 	font-size: 18px;
 	transition: all 0.3s ease;

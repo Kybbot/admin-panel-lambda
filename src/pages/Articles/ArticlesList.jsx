@@ -1,7 +1,9 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
+
 import Article from "./Article";
 import Pagination from "./Pagination";
+import Search from "./Search";
 
 const ArticlesList = ({ articlesIds, articles }) => {
 	const location = useLocation();
@@ -41,6 +43,7 @@ const ArticlesList = ({ articlesIds, articles }) => {
 		<>
 			{currentArticlesIds.length ? (
 				<>
+					<Search articles={articles} />
 					<div className="articles__container">
 						{currentArticlesIds.map((id) => (
 							<Article key={id} data={articles[id]} />
