@@ -33,3 +33,42 @@
 	margin-top: 10px;
 	font-weight: 400;
 }
+
+.form__fieldset {
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 20px;
+	border: none;
+	padding: 0;
+	margin: 0;
+}
+
+.form__file {
+	border-radius: 10px;
+	border: 1px solid var(--blocks-bg);
+	background-color: var(--blocks-bg);
+	padding: 10px;
+	font-size: 18px;
+	cursor: pointer;
+	transition: all 0.3s ease;
+}
+
+.form__file:hover {
+	background-color: #f9fafa;
+}
+
+.form__file + input {
+	opacity: 0.00001;
+	position: absolute;
+	width: 1px;
+	height: 1px;
+}
+
+.form__img {
+	display: block;
+	width: 100px;
+	height: auto;
+	border-radius: 10px;
+}
