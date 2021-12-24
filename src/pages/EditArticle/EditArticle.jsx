@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 
 import { useArticlesContext } from "../../context/ArticlesContext";
-import transformToDateFromTime from "../../utils/transformToDateFromTime";
+import { transformToDateFromTime } from "../../utils";
 import EditArticleForm from "./EditArticleForm";
 import { InfoMessage } from "../../components";
 import { infoMessageTypes } from "../../constants";

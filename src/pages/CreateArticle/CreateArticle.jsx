@@ -5,7 +5,7 @@ import MDEditor from "@uiw/react-md-editor";
 import useFetch from "../../hooks/useFetch";
 import { useArticlesContext } from "../../context/ArticlesContext";
 import { InfoMessage } from "../../components";
-import { infoMessageTypes } from "../../constants";
+import { infoMessageTypes, api, typesOfData } from "../../constants";
 
 const CreateArticle = () => {
 	const navigate = useNavigate();
@@ -19,6 +19,7 @@ const CreateArticle = () => {
 	};
 
 	const [state, setState] = React.useState(initialState);
+	const [fileData, setFileData] = React.useState();
 	const [mdValue, setMdValue] = React.useState("");
 	const [success, setSuccess] = React.useState(false);
 
@@ -34,12 +35,28 @@ const CreateArticle = () => {
 	const formSubmitHandler = async (event) => {
 		event.preventDefault();
 
+		const { url, fields } = await request(api.img);
+
 		const data = {
 			...state,
 			content: mdValue,
+			file_id: fields.key,
 		};
 
-		const result = await request("/articles/create", "POST", data);
+		const result = await request(`${api.url}/articles/create`, "POST", data);
+
+		if (fileData) {
+			const formData = new FormData();
+
+			Object.keys(fields).forEach((key) => {
+				formData.append(key, fields[key]);
+			});
+
+			formData.append("Content-Type", fileData.type);
+			formData.append("file", fileData);
+
+			await request(url, "POST", formData, {}, typesOfData.img);
+		}
 
 		addToNormalizedArticles(result.id, {
 			id: result.id,
@@ -50,6 +67,7 @@ const CreateArticle = () => {
 		if (!loading && !error && typeof result !== "undefined") {
 			setSuccess(true);
 			setState(initialState);
+			setFileData(null);
 			setMdValue("");
 		}
 	};
@@ -77,6 +95,25 @@ const CreateArticle = () => {
 					Назад
 				</button>
 				<form className="form" onSubmit={formSubmitHandler}>
+					<fieldset className="form__fieldset">
+						<label htmlFor="file" className="form__file">
+							Выьбрать фото
+						</label>
+						<input
+							id="file"
+							type="file"
+							name="file"
+							accept="image/*"
+							onChange={(event) => setFileData(event.target.files[0])}
+						/>
+						{fileData && (
+							<img
+								className="form__img"
+								src={URL.createObjectURL(fileData)}
+								alt={state.title}
+							/>
+						)}
+					</fieldset>
 					<label htmlFor="title" className="form__label">
 						Название
 						<input
