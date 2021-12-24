@@ -1,4 +1,4 @@
-import api from "../constants/api";
+import { api } from "../constants";
 
 function getAllArticles() {
 	return fetch(`${api.url}/articles`, {

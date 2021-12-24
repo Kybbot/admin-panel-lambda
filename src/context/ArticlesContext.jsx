@@ -1,7 +1,7 @@
 import React from "react";
 
 import { getAllArticles, getArticle } from "../api/articles";
-import normalizeArticlesData from "../utils/normalizeArticlesData";
+import { normalizeArticlesData } from "../utils";
 
 const ArticlesContext = React.createContext({
 	normalizedArticlesIds: [],
